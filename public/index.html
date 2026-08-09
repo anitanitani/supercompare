@@ -11,7 +11,6 @@
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <div class="header-inner">
     <a href="#" class="logo">
@@ -20,35 +19,33 @@
     </a>
     <div class="location-pill" onclick="openLocationModal()">
       <div class="dot"></div>
-      <span id="locationLabel">Bahía Blanca, Buenos Aires</span>
+      <span id="locationLabel">Mi ciudad</span>
       <span style="font-size:10px;color:var(--muted)">▾</span>
     </div>
     <nav class="nav-tabs">
-      <button class="nav-tab active" data-tab="comparar" onclick="switchTab('comparar',this)">⚖️ Comparar</button>
-      <button class="nav-tab" data-tab="canasta" onclick="switchTab('canasta',this)">🧺 Mi Canasta</button>
-      <button class="nav-tab" data-tab="promos" onclick="switchTab('promos',this)">🏷️ Promociones</button>
-      <button class="nav-tab" data-tab="historial" onclick="switchTab('historial',this)">📊 Historial</button>
+      <button class="nav-tab active" data-tab="comparar" onclick="switchTab('comparar')">⚖️ Comparar</button>
+      <button class="nav-tab" data-tab="canasta" onclick="switchTab('canasta')">🧺 Mi Canasta</button>
+      <button class="nav-tab" data-tab="promos" onclick="switchTab('promos')">🏷️ Promociones</button>
+      <button class="nav-tab" data-tab="historial" onclick="switchTab('historial')">📊 Historial</button>
     </nav>
   </div>
 </header>
 
-<!-- MOBILE TABS -->
 <nav class="mobile-tabs">
-  <button class="mobile-tab active" data-tab="comparar" onclick="switchTab('comparar',this)">
+  <button class="mobile-tab active" data-tab="comparar" onclick="switchTab('comparar')">
     <span class="tab-icon">⚖️</span>Comparar
   </button>
-  <button class="mobile-tab" data-tab="canasta" onclick="switchTab('canasta',this)">
+  <button class="mobile-tab" data-tab="canasta" onclick="switchTab('canasta')">
     <span class="tab-icon">🧺</span>Canasta
   </button>
-  <button class="mobile-tab" data-tab="promos" onclick="switchTab('promos',this)">
+  <button class="mobile-tab" data-tab="promos" onclick="switchTab('promos')">
     <span class="tab-icon">🏷️</span>Promos
   </button>
-  <button class="mobile-tab" data-tab="historial" onclick="switchTab('historial',this)">
+  <button class="mobile-tab" data-tab="historial" onclick="switchTab('historial')">
     <span class="tab-icon">📊</span>Historial
   </button>
 </nav>
 
-<!-- LOADING OVERLAY -->
 <div class="loading-overlay hidden" id="loadingOverlay">
   <div style="font-size:36px">🛒</div>
   <div class="loading-title">Buscando los mejores precios...</div>
@@ -64,16 +61,13 @@
   </div>
 </div>
 
-<!-- LOCATION MODAL -->
 <div class="modal-bg hidden" id="locationModal">
   <div class="modal">
-    <div class="modal-header">
-      <div class="modal-title">📍 Cambiar ubicación</div>
-    </div>
+    <div class="modal-header"><div class="modal-title">📍 Cambiar ubicación</div></div>
     <div class="modal-body">
       <div>
         <div class="form-label">Ciudad o localidad</div>
-        <input class="input" id="locationInput" placeholder="Ej: Bahía Blanca..." value="Bahía Blanca, Buenos Aires">
+        <input class="input" id="locationInput" placeholder="Ej: Bahía Blanca...">
       </div>
       <div>
         <div class="form-label">O usá tu ubicación actual</div>
@@ -87,16 +81,14 @@
   </div>
 </div>
 
-<!-- MAIN -->
 <main class="container">
 
-  <!-- PAGE: COMPARAR -->
   <div class="page active" id="page-comparar">
-    <div class="alert alert-blue mb-20" id="dailyTip">
+    <div class="alert alert-blue mb-20">
       <div class="alert-icon">💡</div>
       <div>
         <div class="alert-title" style="color:#60A5FA">Sugerencia del día</div>
-        <div class="alert-body" id="dailyTipText">Agregá productos a tu canasta y presioná <strong>Comparar ahora</strong> para ver los mejores precios.</div>
+        <div class="alert-body" id="dailyTipText">Escribí cualquier producto en el buscador y presioná <strong>Comparar precios</strong>.</div>
       </div>
     </div>
 
@@ -105,14 +97,17 @@
         <span class="card-title">Tu canasta</span>
         <div class="flex gap-8">
           <span id="canastaCount" class="badge badge-blue">0 productos</span>
-          <button class="btn btn-ghost btn-sm" onclick="switchTab('canasta', document.querySelector('[data-tab=canasta]'))">Editar</button>
+          <button class="btn btn-ghost btn-sm" onclick="switchTab('canasta')">Editar</button>
         </div>
       </div>
       <div style="padding:14px 20px; border-bottom:1px solid var(--border);">
         <div class="search-wrap">
           <span class="search-icon">🔍</span>
-          <input class="input" id="quickSearch" placeholder="Buscar producto para agregar..." autocomplete="off"
-            oninput="handleSearch(this.value)" onfocus="showSuggestions()" onblur="setTimeout(hideSuggestions,200)">
+          <input class="input" id="quickSearch"
+            placeholder="Ej: leche, arroz, detergente..."
+            autocomplete="off"
+            oninput="handleSearch(this.value)"
+            onblur="setTimeout(hideSuggestions, 200)">
           <div class="suggestions" id="suggestions"></div>
         </div>
       </div>
@@ -120,17 +115,17 @@
         <div class="empty-state" style="padding:40px 20px;">
           <div class="empty-icon">🧺</div>
           <div class="empty-title">Canasta vacía</div>
-          <div class="empty-sub">Buscá productos arriba para agregar.</div>
+          <div class="empty-sub">Escribí cualquier producto arriba para agregar.</div>
         </div>
       </div>
       <div style="padding:14px 20px; border-top:1px solid var(--border); display:flex; gap:10px; justify-content:flex-end;">
         <button class="btn btn-ghost btn-sm" onclick="clearCanasta()">🗑️ Vaciar</button>
-        <button class="btn btn-primary" id="compareBtn" onclick="runComparison()">⚖️ Comparar precios</button>
+        <button class="btn btn-primary" onclick="runComparison()">⚖️ Comparar precios</button>
       </div>
     </div>
 
     <div id="resultsSection" style="display:none;">
-      <div class="ai-panel mb-20" id="aiPanel">
+      <div class="ai-panel mb-20">
         <div class="ai-panel-header">
           <span style="font-size:20px">🤖</span>
           <div>
@@ -164,30 +159,21 @@
     </div>
   </div>
 
-  <!-- PAGE: CANASTA -->
   <div class="page" id="page-canasta">
     <div class="flex justify-between items-center mb-16">
       <div>
         <h1 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;">Mi Canasta Habitual</h1>
-        <p style="font-size:12px;color:var(--muted);margin-top:4px;">Los productos guardados se cargan automáticamente al comparar.</p>
+        <p style="font-size:12px;color:var(--muted);margin-top:4px;">Los productos se guardan automáticamente.</p>
       </div>
-      <button class="btn btn-primary" onclick="switchTab('comparar', document.querySelector('[data-tab=comparar]')); setTimeout(runComparison,300)">⚖️ Comparar</button>
-    </div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
-      <button class="btn btn-ghost btn-sm cat-filter active" data-cat="all" onclick="filterCat('all',this)">Todos</button>
-      <button class="btn btn-ghost btn-sm cat-filter" data-cat="Lácteos" onclick="filterCat('Lácteos',this)">🥛 Lácteos</button>
-      <button class="btn btn-ghost btn-sm cat-filter" data-cat="Almacén" onclick="filterCat('Almacén',this)">🧀 Almacén</button>
-      <button class="btn btn-ghost btn-sm cat-filter" data-cat="Carnes" onclick="filterCat('Carnes',this)">🥩 Carnes</button>
-      <button class="btn btn-ghost btn-sm cat-filter" data-cat="Frutas y Verduras" onclick="filterCat('Frutas y Verduras',this)">🥦 Verduras</button>
-      <button class="btn btn-ghost btn-sm cat-filter" data-cat="Limpieza" onclick="filterCat('Limpieza',this)">🧹 Limpieza</button>
-      <button class="btn btn-ghost btn-sm cat-filter" data-cat="Bebidas" onclick="filterCat('Bebidas',this)">🥤 Bebidas</button>
-      <button class="btn btn-ghost btn-sm cat-filter" data-cat="Panadería" onclick="filterCat('Panadería',this)">🍞 Panadería</button>
-      <button class="btn btn-ghost btn-sm cat-filter" data-cat="Higiene" onclick="filterCat('Higiene',this)">🧴 Higiene</button>
+      <button class="btn btn-primary" onclick="switchTab('comparar'); setTimeout(runComparison,300)">⚖️ Comparar</button>
     </div>
     <div class="search-wrap mb-16">
       <span class="search-icon">🔍</span>
-      <input class="input" id="canastaSearch" placeholder="Buscar y agregar productos..." autocomplete="off"
-        oninput="handleSearch(this.value,'canasta')" onfocus="showSuggestions('canasta')" onblur="setTimeout(()=>hideSuggestions('canasta'),200)">
+      <input class="input" id="canastaSearch"
+        placeholder="Agregar producto a mi canasta..."
+        autocomplete="off"
+        oninput="handleSearchCanasta(this.value)"
+        onblur="setTimeout(hideSuggestionsCanasta, 200)">
       <div class="suggestions" id="suggestions-canasta"></div>
     </div>
     <div class="card">
@@ -205,8 +191,70 @@
     </div>
   </div>
 
-  <!-- PAGE: PROMOS -->
   <div class="page" id="page-promos">
     <div class="flex justify-between items-center mb-16">
       <div>
         <h1 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;">Promociones Bancarias</h1>
+        <p style="font-size:12px;color:var(--muted);margin-top:4px;">Descuentos por banco y billetera.</p>
+      </div>
+    </div>
+    <div class="section-title">Elegí el día</div>
+    <div class="days-row" id="daysRow"></div>
+    <div class="section-title mt-20" id="promosDayTitle">Promociones del día</div>
+    <div class="promo-list" id="promosList"></div>
+    <div class="alert alert-green mt-20" id="bestDayAlert" style="display:none;">
+      <div class="alert-icon">🏆</div>
+      <div>
+        <div class="alert-title" style="color:var(--green)" id="bestDayTitle"></div>
+        <div class="alert-body" id="bestDayBody"></div>
+      </div>
+    </div>
+    <div class="card mt-20">
+      <div class="card-header">
+        <span class="card-title">Mis métodos de pago</span>
+        <button class="btn btn-ghost btn-sm" onclick="openPaymentModal()">+ Agregar</button>
+      </div>
+      <div style="padding:14px 20px;">
+        <div class="flex gap-8 flex-wrap" id="paymentChips"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page" id="page-historial">
+    <div class="flex justify-between items-center mb-16">
+      <div>
+        <h1 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;">Historial</h1>
+        <p style="font-size:12px;color:var(--muted);margin-top:4px;">Tus últimas comparaciones.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="hist-list" id="historialList">
+        <div class="empty-state" style="padding:50px 20px;">
+          <div class="empty-icon">📊</div>
+          <div class="empty-title">Sin historial aún</div>
+          <div class="empty-sub">Hacé tu primera comparación.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div class="modal-bg hidden" id="paymentModal">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">💳 Agregar método de pago</div></div>
+    <div class="modal-body">
+      <div>
+        <div class="form-label">Seleccioná tu banco o billetera</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;" id="paymentOptions"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('paymentModal')">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>
