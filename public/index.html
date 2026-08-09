@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SuperCompare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/app.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon">🛒</div>
+      super<span>compare</span>
+    </a>
+    <div class="location-pill" onclick="openLocationModal()">
+      <div class="dot"></div>
+      <span id="locationLabel">Bahía Blanca, Buenos Aires</span>
+      <span style="font-size:10px;color:var(--muted)">▾</span>
+    </div>
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-tab="comparar" onclick="switchTab('comparar',this)">⚖️ Comparar</button>
+      <button class="nav-tab" data-tab="canasta" onclick="switchTab('canasta',this)">🧺 Mi Canasta</button>
+      <button class="nav-tab" data-tab="promos" onclick="switchTab('promos',this)">🏷️ Promociones</button>
+      <button class="nav-tab" data-tab="historial" onclick="switchTab('historial',this)">📊 Historial</button>
+    </nav>
+  </div>
+</header>
+
+<!-- MOBILE TABS -->
+<nav class="mobile-tabs">
+  <button class="mobile-tab active" data-tab="comparar" onclick="switchTab('comparar',this)">
+    <span class="tab-icon">⚖️</span>Comparar
+  </button>
+  <button class="mobile-tab" data-tab="canasta" onclick="switchTab('canasta',this)">
+    <span class="tab-icon">🧺</span>Canasta
+  </button>
+  <button class="mobile-tab" data-tab="promos" onclick="switchTab('promos',this)">
+    <span class="tab-icon">🏷️</span>Promos
+  </button>
+  <button class="mobile-tab" data-tab="historial" onclick="switchTab('historial',this)">
+    <span class="tab-icon">📊</span>Historial
+  </button>
+</nav>
+
+<!-- LOADING OVERLAY -->
+<div class="loading-overlay hidden" id="loadingOverlay">
+  <div style="font-size:36px">🛒</div>
+  <div class="loading-title">Buscando los mejores precios...</div>
+  <div class="loading-sub" id="loadingSubtitle">Conectando con supermercados</div>
+  <div class="loading-steps" id="loadingSteps">
+    <div class="loading-step" id="step-carrefour"><span class="step-icon">🔵</span> Consultando Carrefour...</div>
+    <div class="loading-step" id="step-jumbo"><span class="step-icon">🟢</span> Consultando Jumbo...</div>
+    <div class="loading-step" id="step-chango"><span class="step-icon">🟠</span> Consultando Chango Más...</div>
+    <div class="loading-step" id="step-anonima"><span class="step-icon">🔴</span> Consultando La Anónima...</div>
+    <div class="loading-step" id="step-maxi"><span class="step-icon">🟣</span> Consultando Maxi Consumo...</div>
+    <div class="loading-step" id="step-coope"><span class="step-icon">🩵</span> Consultando La Coope...</div>
+    <div class="loading-step" id="step-ai"><span class="step-icon">🤖</span> Analizando con IA...</div>
+  </div>
+</div>
+
+<!-- LOCATION MODAL -->
+<div class="modal-bg hidden" id="locationModal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">📍 Cambiar ubicación</div>
+    </div>
+    <div class="modal-body">
+      <div>
+        <div class="form-label">Ciudad o localidad</div>
+        <input class="input" id="locationInput" placeholder="Ej: Bahía Blanca..." value="Bahía Blanca, Buenos Aires">
+      </div>
+      <div>
+        <div class="form-label">O usá tu ubicación actual</div>
+        <button class="btn btn-ghost" onclick="useGeoLocation()">📡 Detectar automáticamente</button>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('locationModal')">Cancelar</button>
+      <button class="btn btn-primary" onclick="saveLocation()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="container">
+
+  <!-- PAGE: COMPARAR -->
+  <div class="page active" id="page-comparar">
+    <div class="alert alert-blue mb-20" id="dailyTip">
+      <div class="alert-icon">💡</div>
+      <div>
+        <div class="alert-title" style="color:#60A5FA">Sugerencia del día</div>
+        <div class="alert-body" id="dailyTipText">Agregá productos a tu canasta y presioná <strong>Comparar ahora</strong> para ver los mejores precios.</div>
+      </div>
+    </div>
+
+    <div class="card mb-20">
+      <div class="card-header">
+        <span class="card-title">Tu canasta</span>
+        <div class="flex gap-8">
+          <span id="canastaCount" class="badge badge-blue">0 productos</span>
+          <button class="btn btn-ghost btn-sm" onclick="switchTab('canasta', document.querySelector('[data-tab=canasta]'))">Editar</button>
+        </div>
+      </div>
+      <div style="padding:14px 20px; border-bottom:1px solid var(--border);">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input class="input" id="quickSearch" placeholder="Buscar producto para agregar..." autocomplete="off"
+            oninput="handleSearch(this.value)" onfocus="showSuggestions()" onblur="setTimeout(hideSuggestions,200)">
+          <div class="suggestions" id="suggestions"></div>
+        </div>
+      </div>
+      <div id="canastaPreview">
+        <div class="empty-state" style="padding:40px 20px;">
+          <div class="empty-icon">🧺</div>
+          <div class="empty-title">Canasta vacía</div>
+          <div class="empty-sub">Buscá productos arriba para agregar.</div>
+        </div>
+      </div>
+      <div style="padding:14px 20px; border-top:1px solid var(--border); display:flex; gap:10px; justify-content:flex-end;">
+        <button class="btn btn-ghost btn-sm" onclick="clearCanasta()">🗑️ Vaciar</button>
+        <button class="btn btn-primary" id="compareBtn" onclick="runComparison()">⚖️ Comparar precios</button>
+      </div>
+    </div>
+
+    <div id="resultsSection" style="display:none;">
+      <div class="ai-panel mb-20" id="aiPanel">
+        <div class="ai-panel-header">
+          <span style="font-size:20px">🤖</span>
+          <div>
+            <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#60A5FA;">Análisis de IA</div>
+            <div style="font-size:11px;color:var(--muted);">SuperCompare Intelligence</div>
+          </div>
+        </div>
+        <div id="aiContent">
+          <div class="ai-thinking"><div class="spinner"></div>Analizando precios...</div>
+        </div>
+      </div>
+      <div class="section-title">Total de tu canasta por supermercado</div>
+      <div class="compare-top" id="totalRanking"></div>
+      <div class="section-title mt-20">Precio por producto</div>
+      <div class="compare-table-wrap">
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th class="product-col">Producto</th>
+              <th class="super-col"><div style="width:22px;height:22px;border-radius:5px;background:#003B8E;color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 3px;">C</div>Carrefour</th>
+              <th class="super-col"><div style="width:22px;height:22px;border-radius:5px;background:#00873D;color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 3px;">J</div>Jumbo</th>
+              <th class="super-col"><div style="width:22px;height:22px;border-radius:5px;background:#FF6B00;color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 3px;">CH</div>Chango +</th>
+              <th class="super-col"><div style="width:22px;height:22px;border-radius:5px;background:#C8102E;color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 3px;">A</div>La Anónima</th>
+              <th class="super-col"><div style="width:22px;height:22px;border-radius:5px;background:#6B21A8;color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 3px;">M</div>Maxi Consumo</th>
+              <th class="super-col"><div style="width:22px;height:22px;border-radius:5px;background:#0D9488;color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 3px;">CO</div>La Coope</th>
+            </tr>
+          </thead>
+          <tbody id="compareTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: CANASTA -->
+  <div class="page" id="page-canasta">
+    <div class="flex justify-between items-center mb-16">
+      <div>
+        <h1 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;">Mi Canasta Habitual</h1>
+        <p style="font-size:12px;color:var(--muted);margin-top:4px;">Los productos guardados se cargan automáticamente al comparar.</p>
+      </div>
+      <button class="btn btn-primary" onclick="switchTab('comparar', document.querySelector('[data-tab=comparar]')); setTimeout(runComparison,300)">⚖️ Comparar</button>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+      <button class="btn btn-ghost btn-sm cat-filter active" data-cat="all" onclick="filterCat('all',this)">Todos</button>
+      <button class="btn btn-ghost btn-sm cat-filter" data-cat="Lácteos" onclick="filterCat('Lácteos',this)">🥛 Lácteos</button>
+      <button class="btn btn-ghost btn-sm cat-filter" data-cat="Almacén" onclick="filterCat('Almacén',this)">🧀 Almacén</button>
+      <button class="btn btn-ghost btn-sm cat-filter" data-cat="Carnes" onclick="filterCat('Carnes',this)">🥩 Carnes</button>
+      <button class="btn btn-ghost btn-sm cat-filter" data-cat="Frutas y Verduras" onclick="filterCat('Frutas y Verduras',this)">🥦 Verduras</button>
+      <button class="btn btn-ghost btn-sm cat-filter" data-cat="Limpieza" onclick="filterCat('Limpieza',this)">🧹 Limpieza</button>
+      <button class="btn btn-ghost btn-sm cat-filter" data-cat="Bebidas" onclick="filterCat('Bebidas',this)">🥤 Bebidas</button>
+      <button class="btn btn-ghost btn-sm cat-filter" data-cat="Panadería" onclick="filterCat('Panadería',this)">🍞 Panadería</button>
+      <button class="btn btn-ghost btn-sm cat-filter" data-cat="Higiene" onclick="filterCat('Higiene',this)">🧴 Higiene</button>
+    </div>
+    <div class="search-wrap mb-16">
+      <span class="search-icon">🔍</span>
+      <input class="input" id="canastaSearch" placeholder="Buscar y agregar productos..." autocomplete="off"
+        oninput="handleSearch(this.value,'canasta')" onfocus="showSuggestions('canasta')" onblur="setTimeout(()=>hideSuggestions('canasta'),200)">
+      <div class="suggestions" id="suggestions-canasta"></div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Productos guardados</span>
+        <span class="badge badge-blue" id="canastaTotal">0</span>
+      </div>
+      <div id="canastaFullList">
+        <div class="empty-state">
+          <div class="empty-icon">🛒</div>
+          <div class="empty-title">Tu canasta está vacía</div>
+          <div class="empty-sub">Buscá productos arriba para agregarlos.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: PROMOS -->
+  <div class="page" id="page-promos">
+    <div class="flex justify-between items-center mb-16">
+      <div>
+        <h1 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;">Promociones Bancarias</h1>
