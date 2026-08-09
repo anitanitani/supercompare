@@ -1,6 +1,6 @@
 export const metadata = {
   title: 'SuperCompare — Comparador de Supermercados Argentina',
-  description: 'Comparación de precios en La Anónima, Chango Más, Carrefour, Maxi Consumo, Jumbo y La Coope en Casa.',
+  description: 'Comparación de precios en supermercados argentinos.',
 };
 
 export default function RootLayout({ children }) {
@@ -15,7 +15,11 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
         <link rel="stylesheet" href="/app.css" />
-        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+        <script
+          src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"
+          defer
+        />
+        <script src="/app.js" defer />
       </head>
       <body>{children}</body>
     </html>
