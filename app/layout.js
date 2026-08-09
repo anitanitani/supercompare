@@ -15,11 +15,7 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
         <link rel="stylesheet" href="/app.css" />
-        <script
-          src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"
-          defer
-        />
-        <script src="/app.js" defer />
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js" />
       </head>
       <body>{children}</body>
     </html>
