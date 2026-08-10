@@ -3,15 +3,13 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ['cheerio']
   },
-  async rewrites() {
-    return {
-      afterFiles: [
-        {
-          source: '/',
-          destination: '/index.html',
-        },
-      ],
-    };
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [{ key: 'X-Content-Type-Options', value: 'nosniff' }],
+      },
+    ];
   },
 };
 
