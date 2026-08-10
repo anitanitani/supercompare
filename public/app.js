@@ -1,50 +1,50 @@
 // ══════════════════════════════════════════════════════════════
-// SUPERCOMPARE — Búsqueda libre en supermercados argentinos
+// SUPERCOMPARE — app.js
 // ══════════════════════════════════════════════════════════════
 
 const SUPERMARKETS = [
-  { id: 'carrefour', name: 'Carrefour',     short: 'C',  color: '#003B8E' },
-  { id: 'jumbo',     name: 'Jumbo',         short: 'J',  color: '#00873D' },
-  { id: 'chango',    name: 'Chango +',      short: 'CH', color: '#FF6B00' },
-  { id: 'anonima',   name: 'La Anónima',    short: 'A',  color: '#C8102E' },
-  { id: 'maxi',      name: 'Maxi Consumo',  short: 'M',  color: '#6B21A8' },
-  { id: 'coope',     name: 'La Coope',      short: 'CO', color: '#0D9488' },
+  { id: 'carrefour', name: 'Carrefour',    short: 'C',  color: '#003B8E' },
+  { id: 'jumbo',     name: 'Jumbo',        short: 'J',  color: '#00873D' },
+  { id: 'chango',    name: 'Chango +',     short: 'CH', color: '#FF6B00' },
+  { id: 'anonima',   name: 'La Anónima',  short: 'A',  color: '#C8102E' },
+  { id: 'maxi',      name: 'Maxi Consumo',short: 'M',  color: '#6B21A8' },
+  { id: 'coope',     name: 'La Coope',    short: 'CO', color: '#0D9488' },
 ];
 
 const PROMOTIONS = {
   0: [
-    { supermercado:'La Coope',     emoji:'🏪', banco_billetera:'Socios La Coope', desc:'5% descuento',  detail:'Presentando credencial de socio', color:'#0D9488' },
-    { supermercado:'Carrefour',    emoji:'🔵', banco_billetera:'Mercado Pago',    desc:'10% reintegro', detail:'Hasta $3.000 de reintegro',       color:'#003B8E' },
+    { supermercado:'La Coope',    emoji:'🏪', banco_billetera:'Socios La Coope', desc:'5% descuento',  detail:'Presentando credencial de socio', color:'#0D9488' },
+    { supermercado:'Carrefour',   emoji:'🔵', banco_billetera:'Mercado Pago',    desc:'10% reintegro', detail:'Hasta $3.000 de reintegro',       color:'#003B8E' },
   ],
   1: [
-    { supermercado:'Carrefour',    emoji:'🔵', banco_billetera:'Naranja X',       desc:'15% descuento', detail:'En compras desde $10.000',         color:'#003B8E' },
-    { supermercado:'Jumbo',        emoji:'🟢', banco_billetera:'Galicia',         desc:'10% descuento', detail:'Tarjetas Visa y Mastercard',        color:'#00873D' },
+    { supermercado:'Carrefour',   emoji:'🔵', banco_billetera:'Naranja X',       desc:'15% descuento', detail:'En compras desde $10.000',  color:'#003B8E' },
+    { supermercado:'Jumbo',       emoji:'🟢', banco_billetera:'Galicia',         desc:'10% descuento', detail:'Tarjetas Visa y Mastercard', color:'#00873D' },
   ],
   2: [
-    { supermercado:'Jumbo',        emoji:'🟢', banco_billetera:'BBVA',            desc:'10% descuento', detail:'Débito y crédito',                  color:'#00873D' },
-    { supermercado:'La Anónima',   emoji:'🔴', banco_billetera:'Santander',       desc:'15% descuento', detail:'Tarjetas Select',                   color:'#C8102E' },
-    { supermercado:'Maxi Consumo', emoji:'🟣', banco_billetera:'Personal Pay',    desc:'12% descuento', detail:'Billetera virtual',                 color:'#6B21A8' },
+    { supermercado:'Jumbo',       emoji:'🟢', banco_billetera:'BBVA',            desc:'10% descuento', detail:'Débito y crédito',           color:'#00873D' },
+    { supermercado:'La Anónima', emoji:'🔴', banco_billetera:'Santander',       desc:'15% descuento', detail:'Tarjetas Select',            color:'#C8102E' },
+    { supermercado:'Maxi Consumo',emoji:'🟣', banco_billetera:'Personal Pay',   desc:'12% descuento', detail:'Billetera virtual',          color:'#6B21A8' },
   ],
   3: [
-    { supermercado:'Carrefour',    emoji:'🔵', banco_billetera:'Mercado Pago',    desc:'10% reintegro', detail:'Hasta $3.000 de reintegro',         color:'#003B8E' },
-    { supermercado:'Maxi Consumo', emoji:'🟣', banco_billetera:'Uala',            desc:'18% descuento', detail:'Pago con QR Uala, sin tope',        color:'#6B21A8' },
-    { supermercado:'Jumbo',        emoji:'🟢', banco_billetera:'BBVA',            desc:'10% descuento', detail:'Débito y crédito',                  color:'#00873D' },
-    { supermercado:'Chango +',     emoji:'🟠', banco_billetera:'HSBC',            desc:'12% descuento', detail:'Tarjetas de crédito Visa',          color:'#FF6B00' },
+    { supermercado:'Carrefour',   emoji:'🔵', banco_billetera:'Mercado Pago',    desc:'10% reintegro', detail:'Hasta $3.000 de reintegro',  color:'#003B8E' },
+    { supermercado:'Maxi Consumo',emoji:'🟣', banco_billetera:'Uala',           desc:'18% descuento', detail:'Pago con QR Uala, sin tope', color:'#6B21A8' },
+    { supermercado:'Jumbo',       emoji:'🟢', banco_billetera:'BBVA',            desc:'10% descuento', detail:'Débito y crédito',           color:'#00873D' },
+    { supermercado:'Chango +',    emoji:'🟠', banco_billetera:'HSBC',            desc:'12% descuento', detail:'Tarjetas de crédito Visa',   color:'#FF6B00' },
   ],
   4: [
-    { supermercado:'Carrefour',    emoji:'🔵', banco_billetera:'Naranja X',       desc:'15% descuento', detail:'En compras desde $10.000',          color:'#003B8E' },
-    { supermercado:'Chango +',     emoji:'🟠', banco_billetera:'Galicia',         desc:'10% descuento', detail:'Tarjetas Visa y Mastercard',        color:'#FF6B00' },
-    { supermercado:'La Anónima',   emoji:'🔴', banco_billetera:'Macro',           desc:'10% descuento', detail:'Tarjetas Mastercard',               color:'#C8102E' },
+    { supermercado:'Carrefour',   emoji:'🔵', banco_billetera:'Naranja X',       desc:'15% descuento', detail:'En compras desde $10.000',   color:'#003B8E' },
+    { supermercado:'Chango +',    emoji:'🟠', banco_billetera:'Galicia',         desc:'10% descuento', detail:'Tarjetas Visa y Mastercard',  color:'#FF6B00' },
+    { supermercado:'La Anónima', emoji:'🔴', banco_billetera:'Macro',           desc:'10% descuento', detail:'Tarjetas Mastercard',         color:'#C8102E' },
   ],
   5: [
-    { supermercado:'Jumbo',        emoji:'🟢', banco_billetera:'Galicia',         desc:'10% descuento', detail:'Tarjetas Visa y Mastercard',        color:'#00873D' },
-    { supermercado:'Carrefour',    emoji:'🔵', banco_billetera:'Nación',          desc:'10% descuento', detail:'Tarjetas de débito Visa',           color:'#003B8E' },
-    { supermercado:'La Coope',     emoji:'🏪', banco_billetera:'Socios La Coope', desc:'8% descuento',  detail:'Viernes de socios',                color:'#0D9488' },
+    { supermercado:'Jumbo',       emoji:'🟢', banco_billetera:'Galicia',         desc:'10% descuento', detail:'Tarjetas Visa y Mastercard', color:'#00873D' },
+    { supermercado:'Carrefour',   emoji:'🔵', banco_billetera:'Nación',          desc:'10% descuento', detail:'Tarjetas de débito Visa',    color:'#003B8E' },
+    { supermercado:'La Coope',    emoji:'🏪', banco_billetera:'Socios La Coope', desc:'8% descuento',  detail:'Viernes de socios',          color:'#0D9488' },
   ],
   6: [
-    { supermercado:'Maxi Consumo', emoji:'🟣', banco_billetera:'Personal Pay',    desc:'12% descuento', detail:'Billetera virtual',                 color:'#6B21A8' },
-    { supermercado:'La Anónima',   emoji:'🔴', banco_billetera:'Macro',           desc:'10% descuento', detail:'Tarjetas Mastercard',               color:'#C8102E' },
-    { supermercado:'Chango +',     emoji:'🟠', banco_billetera:'Mercado Pago',    desc:'8% reintegro',  detail:'Pago con QR',                      color:'#FF6B00' },
+    { supermercado:'Maxi Consumo',emoji:'🟣', banco_billetera:'Personal Pay',   desc:'12% descuento', detail:'Billetera virtual',          color:'#6B21A8' },
+    { supermercado:'La Anónima', emoji:'🔴', banco_billetera:'Macro',           desc:'10% descuento', detail:'Tarjetas Mastercard',        color:'#C8102E' },
+    { supermercado:'Chango +',    emoji:'🟠', banco_billetera:'Mercado Pago',    desc:'8% reintegro',  detail:'Pago con QR',               color:'#FF6B00' },
   ],
 };
 
@@ -60,34 +60,34 @@ let state = {
   canasta: JSON.parse(localStorage.getItem('sc_canasta') || '[]'),
   paymentMethods: JSON.parse(localStorage.getItem('sc_payments') || '[]'),
   historial: JSON.parse(localStorage.getItem('sc_historial') || '[]'),
-  location: localStorage.getItem('sc_location') || 'Mi ciudad',
+  location: localStorage.getItem('sc_location') || '',
+  // carrito: { slug -> { supermarketId, item } }
+  carrito: JSON.parse(localStorage.getItem('sc_carrito') || '{}'),
+  lastResults: null,
 };
-
-// canasta item: { nombre, busqueda, qty }
 
 function saveState() {
   localStorage.setItem('sc_canasta', JSON.stringify(state.canasta));
   localStorage.setItem('sc_payments', JSON.stringify(state.paymentMethods));
   localStorage.setItem('sc_historial', JSON.stringify(state.historial));
   localStorage.setItem('sc_location', state.location);
+  localStorage.setItem('sc_carrito', JSON.stringify(state.carrito));
 }
 
 function formatARS(n) {
+  if (!n && n !== 0) return '—';
   return '$' + Math.round(n).toLocaleString('es-AR');
 }
 
 function getDayName(d) {
   return ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'][d];
 }
-
 function getDayShort(d) {
   return ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'][d];
 }
-
 function getDayEmoji(d) {
   return ['☀️','🌙','🌤️','🌊','🌿','🎉','🌟'][d];
 }
-
 function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 function showToast(msg) {
@@ -95,12 +95,13 @@ function showToast(msg) {
   if (!t) {
     t = document.createElement('div');
     t.id = 'toast';
-    t.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#141528;border:1px solid #252742;color:#EEF0FF;padding:10px 18px;border-radius:30px;font-size:13px;font-weight:500;z-index:1000;box-shadow:0 8px 30px rgba(0,0,0,0.4);transition:opacity 0.3s;white-space:nowrap;';
+    t.style.cssText = 'position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#141528;border:1px solid #252742;color:#EEF0FF;padding:10px 18px;border-radius:30px;font-size:13px;font-weight:500;z-index:2000;box-shadow:0 8px 30px rgba(0,0,0,0.4);transition:opacity 0.3s;white-space:nowrap;';
     document.body.appendChild(t);
   }
   t.textContent = msg;
   t.style.opacity = '1';
-  setTimeout(() => { t.style.opacity = '0'; }, 2500);
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => { t.style.opacity = '0'; }, 2500);
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -114,89 +115,73 @@ window.switchTab = function(tabId) {
   if (tabId === 'canasta') renderCanastaFull();
   if (tabId === 'promos') renderPromos();
   if (tabId === 'historial') renderHistorial();
+  if (tabId === 'carrito') renderCarrito();
 };
 
 // ══════════════════════════════════════════════════════════════
-// BÚSQUEDA LIBRE — el usuario escribe cualquier producto
+// BÚSQUEDA LIBRE
 // ══════════════════════════════════════════════════════════════
-window.handleSearch = function(val) {
-  const el = document.getElementById('suggestions');
-  if (!val.trim() || val.length < 2) { el.classList.remove('open'); return; }
-
-  // Mostramos el texto como opción directa para agregar
-  el.innerHTML = `
-    <div class="suggestion-item" onclick="addProductoLibre('${val.replace(/'/g, "\\'")}')">
+function buildSuggestionHTML(val, onclickFn) {
+  return `
+    <div class="suggestion-item" onclick="${onclickFn}('${val.replace(/'/g, "\\'").replace(/"/g, '&quot;')}')">
       <div>
-        <div style="font-size:13px;font-weight:600;">🔍 Buscar "${val}" en supermercados</div>
+        <div style="font-size:13px;font-weight:600;">🔍 Buscar "<em>${val}</em>" en supermercados</div>
         <div style="font-size:11px;color:var(--muted);">Tocá para agregar a tu canasta</div>
       </div>
       <span class="badge badge-blue">Agregar</span>
-    </div>
-  `;
+    </div>`;
+}
+
+window.handleSearch = function(val) {
+  const el = document.getElementById('suggestions');
+  if (!val || val.trim().length < 2) { el.classList.remove('open'); return; }
+  el.innerHTML = buildSuggestionHTML(val.trim(), 'addProductoLibre');
   el.classList.add('open');
 };
 
 window.handleSearchCanasta = function(val) {
   const el = document.getElementById('suggestions-canasta');
-  if (!val.trim() || val.length < 2) { el.classList.remove('open'); return; }
-  el.innerHTML = `
-    <div class="suggestion-item" onclick="addProductoLibreCanasta('${val.replace(/'/g, "\\'")}')">
-      <div>
-        <div style="font-size:13px;font-weight:600;">🔍 Agregar "${val}" a mi canasta</div>
-        <div style="font-size:11px;color:var(--muted);">Se buscará en todos los supermercados al comparar</div>
-      </div>
-      <span class="badge badge-blue">Agregar</span>
-    </div>
-  `;
+  if (!val || val.trim().length < 2) { el.classList.remove('open'); return; }
+  el.innerHTML = buildSuggestionHTML(val.trim(), 'addProductoLibreCanasta');
   el.classList.add('open');
-};
-
-window.showSuggestions = function() {
-  const inp = document.getElementById('quickSearch');
-  if (inp && inp.value.length >= 2) document.getElementById('suggestions').classList.add('open');
 };
 
 window.hideSuggestions = function() {
   const el = document.getElementById('suggestions');
   if (el) el.classList.remove('open');
 };
-
-window.showSuggestionsCanasta = function() {
-  const inp = document.getElementById('canastaSearch');
-  if (inp && inp.value.length >= 2) document.getElementById('suggestions-canasta').classList.add('open');
-};
-
 window.hideSuggestionsCanasta = function() {
   const el = document.getElementById('suggestions-canasta');
   if (el) el.classList.remove('open');
 };
 
-window.addProductoLibre = function(nombre) {
+function addToCanasta(nombre) {
   const nombreLimpio = nombre.trim();
-  if (!nombreLimpio) return;
-  const existe = state.canasta.find(i => i.nombre.toLowerCase() === nombreLimpio.toLowerCase());
-  if (existe) { existe.qty++; }
-  else { state.canasta.push({ nombre: nombreLimpio, busqueda: nombreLimpio, qty: 1 }); }
+  if (!nombreLimpio) return false;
+  const idx = state.canasta.findIndex(i => i.nombre.toLowerCase() === nombreLimpio.toLowerCase());
+  if (idx >= 0) { state.canasta[idx].qty++; }
+  else { state.canasta.push({ nombre: nombreLimpio, qty: 1 }); }
   saveState();
-  document.getElementById('quickSearch').value = '';
-  window.hideSuggestions();
-  renderCanastaPreview();
   updateCanastaCount();
-  showToast('✅ "' + nombreLimpio + '" agregado a la canasta');
+  return true;
+}
+
+window.addProductoLibre = function(nombre) {
+  if (addToCanasta(nombre)) {
+    document.getElementById('quickSearch').value = '';
+    window.hideSuggestions();
+    renderCanastaPreview();
+    showToast('✅ "' + nombre + '" agregado');
+  }
 };
 
 window.addProductoLibreCanasta = function(nombre) {
-  const nombreLimpio = nombre.trim();
-  if (!nombreLimpio) return;
-  const existe = state.canasta.find(i => i.nombre.toLowerCase() === nombreLimpio.toLowerCase());
-  if (existe) { existe.qty++; }
-  else { state.canasta.push({ nombre: nombreLimpio, busqueda: nombreLimpio, qty: 1 }); }
-  saveState();
-  document.getElementById('canastaSearch').value = '';
-  window.hideSuggestionsCanasta();
-  renderCanastaFull();
-  updateCanastaCount();
-  showToast('✅ "' + nombreLimpio + '" agregado');
+  if (addToCanasta(nombre)) {
+    document.getElementById('canastaSearch').value = '';
+    window.hideSuggestionsCanasta();
+    renderCanastaFull();
+    showToast('✅ "' + nombre + '" agregado');
+  }
 };
 
 // ══════════════════════════════════════════════════════════════
@@ -233,9 +218,23 @@ window.clearCanasta = function() {
 
 function updateCanastaCount() {
   const count = state.canasta.length;
-  document.getElementById('canastaCount').textContent = count + ' productos';
+  document.getElementById('canastaCount').textContent = count + ' producto' + (count !== 1 ? 's' : '');
   const ct = document.getElementById('canastaTotal');
   if (ct) ct.textContent = count;
+}
+
+function itemCard(item, idx) {
+  return `<div class="canasta-item">
+    <div class="canasta-item-info">
+      <div class="canasta-item-name">${item.nombre}</div>
+    </div>
+    <div class="qty-ctrl">
+      <button class="qty-btn" onclick="updateQty(${idx},-1)">−</button>
+      <span class="qty-val">${item.qty}</span>
+      <button class="qty-btn" onclick="updateQty(${idx},1)">+</button>
+    </div>
+    <button class="remove-btn" onclick="removeProduct(${idx})">✕</button>
+  </div>`;
 }
 
 function renderCanastaPreview() {
@@ -244,18 +243,7 @@ function renderCanastaPreview() {
     el.innerHTML = '<div class="empty-state" style="padding:40px 20px;"><div class="empty-icon">🧺</div><div class="empty-title">Canasta vacía</div><div class="empty-sub">Escribí cualquier producto arriba para agregar.</div></div>';
     return;
   }
-  el.innerHTML = '<div class="canasta-grid">' + state.canasta.map((item, idx) => `
-    <div class="canasta-item">
-      <div class="canasta-item-info">
-        <div class="canasta-item-name">${item.nombre}</div>
-      </div>
-      <div class="qty-ctrl">
-        <button class="qty-btn" onclick="updateQty(${idx},-1)">−</button>
-        <span class="qty-val">${item.qty}</span>
-        <button class="qty-btn" onclick="updateQty(${idx},1)">+</button>
-      </div>
-      <button class="remove-btn" onclick="removeProduct(${idx})">✕</button>
-    </div>`).join('') + '</div>';
+  el.innerHTML = '<div class="canasta-grid">' + state.canasta.map(itemCard).join('') + '</div>';
 }
 
 function renderCanastaFull() {
@@ -263,21 +251,10 @@ function renderCanastaFull() {
   const ct = document.getElementById('canastaTotal');
   if (ct) ct.textContent = state.canasta.length;
   if (!state.canasta.length) {
-    el.innerHTML = '<div class="empty-state"><div class="empty-icon">🛒</div><div class="empty-title">Tu canasta está vacía</div><div class="empty-sub">Escribí cualquier producto para agregar.</div></div>';
+    el.innerHTML = '<div class="empty-state"><div class="empty-icon">🛒</div><div class="empty-title">Tu canasta está vacía</div><div class="empty-sub">Escribí cualquier producto arriba para agregar.</div></div>';
     return;
   }
-  el.innerHTML = '<div class="canasta-grid">' + state.canasta.map((item, idx) => `
-    <div class="canasta-item">
-      <div class="canasta-item-info">
-        <div class="canasta-item-name">${item.nombre}</div>
-      </div>
-      <div class="qty-ctrl">
-        <button class="qty-btn" onclick="updateQty(${idx},-1)">−</button>
-        <span class="qty-val">${item.qty}</span>
-        <button class="qty-btn" onclick="updateQty(${idx},1)">+</button>
-      </div>
-      <button class="remove-btn" onclick="removeProduct(${idx})">✕</button>
-    </div>`).join('') + '</div>';
+  el.innerHTML = '<div class="canasta-grid">' + state.canasta.map(itemCard).join('') + '</div>';
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -286,14 +263,18 @@ function renderCanastaFull() {
 window.runComparison = async function() {
   if (!state.canasta.length) { showToast('⚠️ Agregá al menos un producto'); return; }
 
+  // Reset loading
   document.getElementById('loadingOverlay').classList.remove('hidden');
   SUPERMARKETS.forEach(s => {
     const el = document.getElementById('step-' + s.id);
     if (el) {
       el.classList.remove('done','active');
-      el.querySelector('.step-icon').textContent = {carrefour:'🔵',jumbo:'🟢',chango:'🟠',anonima:'🔴',maxi:'🟣',coope:'🩵'}[s.id];
+      el.querySelector('.step-icon').textContent =
+        {carrefour:'🔵',jumbo:'🟢',chango:'🟠',anonima:'🔴',maxi:'🟣',coope:'🩵'}[s.id];
     }
   });
+  const aiStep = document.getElementById('step-ai');
+  if (aiStep) { aiStep.classList.remove('done','active'); aiStep.querySelector('.step-icon').textContent = '🤖'; }
 
   let realResults = null;
   let scraperErrors = {};
@@ -309,101 +290,293 @@ window.runComparison = async function() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         products: state.canasta.map((item, idx) => ({
-          slug: 'producto-' + idx,
+          slug: 'p' + idx,
           nombre: item.nombre,
-          busqueda: item.busqueda || item.nombre,
+          busqueda: item.nombre,
         }))
       })
     });
 
     const data = await res.json();
-    realResults = data.results;
+    realResults = data.results || {};
     scraperErrors = data.errors || {};
 
     SUPERMARKETS.forEach(s => {
       const el = document.getElementById('step-' + s.id);
       if (el) {
+        el.classList.remove('active');
         el.classList.add('done');
         el.querySelector('.step-icon').textContent = scraperErrors[s.id] ? '⚠️' : '✅';
       }
     });
 
   } catch(err) {
-    console.error('Error en scraping:', err);
+    console.error('Error scraping:', err);
     SUPERMARKETS.forEach(s => {
       const el = document.getElementById('step-' + s.id);
       if (el) { el.classList.add('done'); el.querySelector('.step-icon').textContent = '⚠️'; }
     });
   }
 
-  document.getElementById('step-ai').classList.add('active');
+  if (aiStep) aiStep.classList.add('active');
 
-  // Calcular totales
-  const totals = {};
-  SUPERMARKETS.forEach(s => {
-    totals[s.id] = state.canasta.reduce((acc, item, idx) => {
-      const slug = 'producto-' + idx;
+  state.lastResults = realResults;
+
+  // Calcular mejor precio por producto para sugerencia
+  const suggestions = {};
+  state.canasta.forEach((item, idx) => {
+    const slug = 'p' + idx;
+    let bestPrice = Infinity, bestSuper = null;
+    SUPERMARKETS.forEach(s => {
       const r = realResults?.[slug]?.[s.id];
-      const price = r ? (r.precio_oferta || r.precio_regular) : null;
-      return acc + (price ? price * item.qty : 0);
-    }, 0);
+      if (r) {
+        const price = r.precio_oferta || r.precio_regular;
+        if (price && price < bestPrice) { bestPrice = price; bestSuper = s.id; }
+      }
+    });
+    suggestions[slug] = bestSuper;
   });
 
-  const validSupers = SUPERMARKETS.filter(s => totals[s.id] > 0);
-  const best = validSupers.length ? validSupers.reduce((a,b) => totals[a.id] < totals[b.id] ? a : b) : null;
-  const worst = validSupers.length ? validSupers.reduce((a,b) => totals[a.id] > totals[b.id] ? a : b) : null;
-  const saving = best && worst ? totals[worst.id] - totals[best.id] : 0;
-
-  // Mejor día con descuento
-  let bestDay = null, bestDayPromo = null, bestDayDiscount = 0;
-  for (let d = 0; d < 7; d++) {
-    const promos = PROMOTIONS[d] || [];
-    const relevant = state.paymentMethods.length
-      ? promos.filter(p => state.paymentMethods.includes(p.banco_billetera))
-      : promos;
-    relevant.forEach(p => {
-      const pct = parseInt(p.desc) || 0;
-      if (pct > bestDayDiscount) { bestDayDiscount = pct; bestDay = d; bestDayPromo = p; }
-    });
-  }
-
   // Guardar historial
+  const totalMin = state.canasta.reduce((acc, item, idx) => {
+    const slug = 'p' + idx;
+    const bestId = suggestions[slug];
+    if (!bestId) return acc;
+    const r = realResults?.[slug]?.[bestId];
+    const price = r ? (r.precio_oferta || r.precio_regular) : 0;
+    return acc + price * item.qty;
+  }, 0);
+
   state.historial.unshift({
     date: new Date().toLocaleDateString('es-AR', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' }),
     items: state.canasta.length,
-    best: best ? best.name : 'Sin datos',
-    bestTotal: best ? totals[best.id] : 0,
-    location: state.location,
+    location: state.location || 'No especificada',
+    totalMin,
   });
-  if (state.historial.length > 20) state.historial = state.historial.slice(0,20);
+  if (state.historial.length > 20) state.historial = state.historial.slice(0, 20);
   saveState();
 
-  await callAI(totals, validSupers, best, worst, saving, bestDay, bestDayPromo, bestDayDiscount);
+  await callAI(realResults, suggestions);
 
   document.getElementById('loadingOverlay').classList.add('hidden');
-  renderResults(totals, realResults);
+  renderProductResults(realResults, suggestions);
   document.getElementById('resultsSection').style.display = 'block';
   document.getElementById('resultsSection').scrollIntoView({ behavior:'smooth', block:'start' });
 };
 
-async function callAI(totals, validSupers, best, worst, saving, bestDay, bestDayPromo, bestDayDiscount) {
+// ══════════════════════════════════════════════════════════════
+// RESULTADOS POR PRODUCTO — con botón "Elegir" por opción
+// ══════════════════════════════════════════════════════════════
+function renderProductResults(realResults, suggestions) {
+  const el = document.getElementById('productResults');
+
+  el.innerHTML = state.canasta.map((item, idx) => {
+    const slug = 'p' + idx;
+    const superResults = SUPERMARKETS.map(s => {
+      const r = realResults?.[slug]?.[s.id];
+      return { s, r };
+    }).filter(x => x.r);
+
+    const prices = superResults.map(x => x.r.precio_oferta || x.r.precio_regular).filter(Boolean);
+    const minPrice = prices.length ? Math.min(...prices) : null;
+    const maxPrice = prices.length ? Math.max(...prices) : null;
+
+    const carritoItem = state.carrito[slug];
+
+    return `
+    <div class="product-result-card" id="result-${slug}">
+      <div class="product-result-header">
+        <div>
+          <div class="product-result-name">${item.nombre}</div>
+          <div class="product-result-qty">× ${item.qty} unidades</div>
+        </div>
+        ${carritoItem
+          ? `<span class="badge badge-green">✓ En carrito: ${SUPERMARKETS.find(s=>s.id===carritoItem.superId)?.name}</span>`
+          : `<span class="badge badge-blue">Elegí dónde comprar</span>`}
+      </div>
+      <div class="super-options">
+        ${superResults.length === 0
+          ? `<div style="padding:16px;color:var(--muted);font-size:13px;">⚠️ Sin resultados en ningún supermercado para "<strong>${item.nombre}</strong>". Probá con otro término de búsqueda.</div>`
+          : superResults.map(({ s, r }) => {
+              const price = r.precio_oferta || r.precio_regular;
+              const hasOffer = r.precio_oferta && r.precio_oferta < r.precio_regular;
+              const isBest = price === minPrice;
+              const isWorst = price === maxPrice && minPrice !== maxPrice;
+              const isSelected = carritoItem?.superId === s.id;
+              return `
+              <div class="super-option ${isSelected ? 'selected' : ''}">
+                <div class="super-option-left">
+                  <div class="super-badge" style="background:${s.color}">${s.short}</div>
+                  <div>
+                    <div class="super-option-name">${s.name}</div>
+                    ${r.nombre ? `<div class="super-option-found">Encontré: ${r.nombre.substring(0,40)}${r.nombre.length>40?'...':''}</div>` : ''}
+                    ${r.url_producto ? `<a href="${r.url_producto}" target="_blank" class="super-option-link">Ver en sitio →</a>` : ''}
+                  </div>
+                </div>
+                <div class="super-option-right">
+                  ${hasOffer ? `<div class="price-regular">${formatARS(r.precio_regular)}</div>` : ''}
+                  <div class="price-main ${isBest?'best-price':isWorst?'worst-price':''}">
+                    ${formatARS(price)}
+                    ${isBest ? ' ⭐' : ''}
+                  </div>
+                  ${hasOffer ? `<div style="font-size:9px;color:var(--green);">OFERTA</div>` : ''}
+                  <button class="btn ${isSelected ? 'btn-primary' : 'btn-ghost'} btn-sm" style="margin-top:6px;"
+                    onclick="elegirSuper('${slug}', '${s.id}', ${idx})">
+                    ${isSelected ? '✓ Elegido' : 'Elegir'}
+                  </button>
+                </div>
+              </div>`;
+            }).join('')
+        }
+      </div>
+    </div>`;
+  }).join('');
+}
+
+window.elegirSuper = function(slug, superId, idx) {
+  const item = state.canasta[idx];
+  if (!item) return;
+  const r = state.lastResults?.[slug]?.[superId];
+  const price = r ? (r.precio_oferta || r.precio_regular) : null;
+
+  state.carrito[slug] = {
+    superId,
+    nombre: item.nombre,
+    qty: item.qty,
+    price,
+    nombreEncontrado: r?.nombre || item.nombre,
+    urlProducto: r?.url_producto || null,
+  };
+  saveState();
+
+  // Re-render solo esta tarjeta
+  if (state.lastResults) {
+    const suggestions = {};
+    state.canasta.forEach((_, i) => {
+      const s = 'p' + i;
+      const c = state.carrito[s];
+      if (c) suggestions[s] = c.superId;
+    });
+    renderProductResults(state.lastResults, suggestions);
+  }
+
+  showToast('🛒 ' + item.nombre + ' → ' + SUPERMARKETS.find(s=>s.id===superId)?.name);
+};
+
+// ══════════════════════════════════════════════════════════════
+// CARRITO
+// ══════════════════════════════════════════════════════════════
+window.clearCarrito = function() {
+  if (!Object.keys(state.carrito).length) return;
+  if (!confirm('¿Limpiar el carrito?')) return;
+  state.carrito = {};
+  saveState();
+  renderCarrito();
+};
+
+window.quitarDelCarrito = function(slug) {
+  delete state.carrito[slug];
+  saveState();
+  renderCarrito();
+};
+
+function renderCarrito() {
+  const el = document.getElementById('carritoContent');
+  const items = Object.entries(state.carrito);
+
+  if (!items.length) {
+    el.innerHTML = `<div class="empty-state" style="padding:60px 20px;">
+      <div class="empty-icon">🛒</div>
+      <div class="empty-title">Tu carrito está vacío</div>
+      <div class="empty-sub">Comparé precios y elegí en qué super comprás cada producto.</div>
+      <button class="btn btn-primary" style="margin-top:16px;" onclick="switchTab('comparar')">⚖️ Ir a comparar</button>
+    </div>`;
+    return;
+  }
+
+  // Agrupar por supermercado
+  const bySuper = {};
+  SUPERMARKETS.forEach(s => { bySuper[s.id] = []; });
+  items.forEach(([slug, item]) => {
+    if (bySuper[item.superId]) bySuper[item.superId].push({ slug, ...item });
+  });
+
+  // Total general
+  const totalGeneral = items.reduce((acc, [, item]) => {
+    return acc + (item.price ? item.price * item.qty : 0);
+  }, 0);
+
+  let html = `
+    <div class="alert alert-green mb-20">
+      <div class="alert-icon">💰</div>
+      <div>
+        <div class="alert-title" style="color:var(--green)">Total estimado: ${formatARS(totalGeneral)}</div>
+        <div class="alert-body">Comprando cada producto donde lo elegiste.</div>
+      </div>
+    </div>`;
+
+  SUPERMARKETS.forEach(s => {
+    const superItems = bySuper[s.id];
+    if (!superItems.length) return;
+
+    const totalSuper = superItems.reduce((acc, item) => acc + (item.price ? item.price * item.qty : 0), 0);
+
+    html += `
+    <div class="card mb-20">
+      <div class="card-header">
+        <div class="flex gap-8 items-center">
+          <div class="super-badge" style="background:${s.color}">${s.short}</div>
+          <span class="card-title">${s.name}</span>
+        </div>
+        <span style="font-family:'Syne',sans-serif;font-weight:700;color:var(--green)">${formatARS(totalSuper)}</span>
+      </div>
+      <div style="padding:12px 20px;display:flex;flex-direction:column;gap:10px;">
+        ${superItems.map(item => `
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px;background:var(--surface2);border-radius:8px;">
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:13px;font-weight:600;color:var(--text);">${item.nombre}</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:2px;">Encontrado como: ${item.nombreEncontrado?.substring(0,45) || item.nombre}</div>
+              ${item.urlProducto ? `<a href="${item.urlProducto}" target="_blank" style="font-size:10px;color:var(--accent);text-decoration:none;">Ver en sitio →</a>` : ''}
+            </div>
+            <div style="text-align:right;flex-shrink:0;">
+              <div style="font-size:12px;color:var(--muted);">× ${item.qty}</div>
+              <div style="font-family:'Syne',sans-serif;font-size:15px;font-weight:700;">${formatARS(item.price)}</div>
+              <button onclick="quitarDelCarrito('${item.slug}')" style="background:none;border:none;color:var(--muted);font-size:11px;cursor:pointer;padding:0;margin-top:4px;">✕ quitar</button>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>`;
+  });
+
+  el.innerHTML = html;
+}
+
+// ══════════════════════════════════════════════════════════════
+// IA
+// ══════════════════════════════════════════════════════════════
+async function callAI(realResults, suggestions) {
   const today = new Date().getDay();
   const todayPromos = PROMOTIONS[today] || [];
-  const sortedSupers = [...SUPERMARKETS].filter(s => totals[s.id] > 0).sort((a,b) => totals[a.id]-totals[b.id]);
 
-  const prompt = `Sos un experto en ahorro en supermercados argentinos. Analizá esta comparación en español argentino, de forma directa.
+  // Resumen de resultados para el prompt
+  const resumenProductos = state.canasta.map((item, idx) => {
+    const slug = 'p' + idx;
+    const bestId = suggestions[slug];
+    const r = realResults?.[slug]?.[bestId];
+    const price = r ? (r.precio_oferta || r.precio_regular) : null;
+    return `${item.nombre}: ${price ? formatARS(price) + ' en ' + SUPERMARKETS.find(s=>s.id===bestId)?.name : 'sin datos'}`;
+  }).join(', ');
 
-CANASTA: ${state.canasta.map(i => i.nombre + ' x' + i.qty).join(', ')}
-UBICACIÓN: ${state.location}
-TOTALES:
-${sortedSupers.length ? sortedSupers.map(s => `- ${s.name}: ${formatARS(totals[s.id])}`).join('\n') : 'Sin datos de precios reales'}
-${best ? `MÁS BARATO: ${best.name} (${formatARS(totals[best.id])})` : ''}
-${saving > 0 ? `AHORRO POSIBLE: ${formatARS(saving)}` : ''}
+  const prompt = `Sos un experto en ahorro en supermercados argentinos. Analizá estos resultados en español argentino, siendo directo y útil.
+
+CANASTA BUSCADA: ${state.canasta.map(i => i.nombre + ' x' + i.qty).join(', ')}
+CIUDAD: ${state.location || 'no especificada'}
+MEJORES PRECIOS ENCONTRADOS: ${resumenProductos}
 MIS MÉTODOS DE PAGO: ${state.paymentMethods.length ? state.paymentMethods.join(', ') : 'no especificados'}
-PROMOS HOY: ${todayPromos.map(p => `${p.supermercado}: ${p.desc} con ${p.banco_billetera}`).join(', ') || 'ninguna'}
-${bestDay !== null && bestDayPromo ? `MEJOR DÍA: ${getDayName(bestDay)} en ${bestDayPromo.supermercado} con ${bestDayPromo.banco_billetera} (${bestDayDiscount}% off)` : ''}
+PROMOS HOY (${getDayName(today)}): ${todayPromos.map(p => p.supermercado + ': ' + p.desc + ' con ' + p.banco_billetera).join(', ') || 'ninguna'}
 
-Respondé con 3-4 oraciones cortas. Empezá cada una con un emoji. Sé directo y práctico.`;
+Respondé con 3 oraciones cortas. Cada una empieza con un emoji. Comentá si los precios encontrados parecen razonables, si hay promo bancaria útil hoy, y un tip concreto.`;
 
   try {
     const response = await fetch('/api/ai-analysis', {
@@ -412,77 +585,23 @@ Respondé con 3-4 oraciones cortas. Empezá cada una con un emoji. Sé directo y
       body: JSON.stringify({ prompt }),
     });
     const data = await response.json();
-    if (data.fallback || !data.text) throw new Error('Sin respuesta');
-    document.getElementById('step-ai').classList.add('done');
-    document.getElementById('step-ai').querySelector('.step-icon').textContent = '✅';
-    document.getElementById('aiContent').innerHTML = '<div class="ai-content">' +
-      data.text.split('\n').filter(l=>l.trim()).map(l=>`<p>${l}</p>`).join('') + '</div>';
-    if (bestDay !== null && bestDayPromo) {
-      document.getElementById('bestDayAlert').style.display = 'flex';
-      document.getElementById('bestDayTitle').textContent = `Mejor día: ${getDayName(bestDay)} en ${bestDayPromo.supermercado}`;
-      document.getElementById('bestDayBody').textContent = `${bestDayPromo.banco_billetera}: ${bestDayPromo.desc}. ${bestDayPromo.detail}.`;
-    }
+
+    const aiStep = document.getElementById('step-ai');
+    if (aiStep) { aiStep.classList.add('done'); aiStep.querySelector('.step-icon').textContent = data.fallback ? '⚠️' : '✅'; }
+
+    if (data.fallback || !data.text) throw new Error('sin respuesta');
+
+    document.getElementById('aiContent').innerHTML =
+      '<div class="ai-content">' + data.text.split('\n').filter(l=>l.trim()).map(l=>`<p>${l}</p>`).join('') + '</div>';
+
   } catch(err) {
-    document.getElementById('step-ai').classList.add('done');
-    document.getElementById('step-ai').querySelector('.step-icon').textContent = '⚠️';
-    document.getElementById('aiContent').innerHTML = `<div class="ai-content">
-      ${best ? `<p>🛒 Conviene ir a <strong>${best.name}</strong> para esta canasta.</p>` : '<p>⚠️ No se pudieron obtener precios reales. Intentá de nuevo en unos segundos.</p>'}
-      ${saving > 0 ? `<p>💰 Ahorrás <strong>${formatARS(saving)}</strong> vs ${worst.name}.</p>` : ''}
-      ${bestDay !== null && bestDayPromo ? `<p>📅 Mejor día: <strong>${getDayName(bestDay)}</strong> en ${bestDayPromo.supermercado} con ${bestDayPromo.banco_billetera} (${bestDayDiscount}% off).</p>` : ''}
-    </div>`;
+    const aiStep = document.getElementById('step-ai');
+    if (aiStep) { aiStep.classList.add('done'); aiStep.querySelector('.step-icon').textContent = '⚠️'; }
+    document.getElementById('aiContent').innerHTML =
+      `<div class="ai-content"><p>📊 Resultados listos. Revisá cada producto y elegí en qué super lo comprás.</p>
+      ${todayPromos.length ? `<p>🏷️ Hoy hay promos: ${todayPromos.map(p=>p.supermercado+' con '+p.banco_billetera+' → '+p.desc).join(' / ')}.</p>` : ''}
+      </div>`;
   }
-}
-
-function renderResults(totals, realResults) {
-  const sortedSupers = [...SUPERMARKETS].sort((a,b) => totals[a.id]-totals[b.id]);
-  const validTotals = sortedSupers.filter(s => totals[s.id] > 0);
-  const minTotal = validTotals.length ? totals[validTotals[0].id] : 0;
-
-  document.getElementById('totalRanking').innerHTML = sortedSupers.map((s,i) => `
-    <div class="super-total-card ${i===0 && totals[s.id]>0 ? 'best' : ''}">
-      ${i===0 && totals[s.id]>0 ? '<div class="best-ribbon"><span class="badge badge-green">Más barato</span></div>' : ''}
-      <div class="super-logo" style="background:${s.color}">${s.short}</div>
-      <div class="super-total-name">${s.name}</div>
-      <div class="super-total-price" style="color:${totals[s.id]===0?'var(--muted)':i===0?'var(--green)':i===sortedSupers.length-1&&totals[s.id]>0?'var(--red)':'var(--text)'}">
-        ${totals[s.id] > 0 ? formatARS(totals[s.id]) : 'Sin datos'}
-      </div>
-      ${i>0 && totals[s.id]>0 && minTotal>0 ? `<div class="super-total-diff">+${formatARS(totals[s.id]-minTotal)} más</div>` : ''}
-    </div>
-  `).join('');
-
-  const tbody = document.getElementById('compareTableBody');
-  tbody.innerHTML = state.canasta.map((item, idx) => {
-    const slug = 'producto-' + idx;
-    const prices = SUPERMARKETS.map(s => {
-      const r = realResults?.[slug]?.[s.id];
-      return r ? (r.precio_oferta || r.precio_regular) : null;
-    });
-    const validPrices = prices.filter(Boolean);
-    const minP = validPrices.length ? Math.min(...validPrices) : null;
-    const maxP = validPrices.length ? Math.max(...validPrices) : null;
-
-    return `<tr>
-      <td>
-        <div class="td-product-name">${item.nombre}</div>
-        <div class="td-product-qty">× ${item.qty} unidades</div>
-      </td>
-      ${SUPERMARKETS.map(s => {
-        const r = realResults?.[slug]?.[s.id];
-        if (!r) return '<td class="td-price"><div class="no-price">—</div></td>';
-        const eff = r.precio_oferta || r.precio_regular;
-        const hasOffer = r.precio_oferta && r.precio_oferta < r.precio_regular;
-        const isBest = eff === minP;
-        const isWorst = eff === maxP && minP !== maxP;
-        const cls = isBest ? 'best-price' : isWorst ? 'worst-price' : 'mid-price';
-        return `<td class="td-price">
-          ${hasOffer ? `<div class="price-regular">${formatARS(r.precio_regular)}</div>` : ''}
-          <div class="${hasOffer?'price-offer':'price-only'} ${cls}">${formatARS(eff)}</div>
-          ${r.url_producto ? `<a href="${r.url_producto}" target="_blank" style="font-size:9px;color:var(--muted);text-decoration:none;">ver →</a>` : ''}
-          ${isBest ? '<div style="font-size:11px">⭐</div>' : ''}
-        </td>`;
-      }).join('')}
-    </tr>`;
-  }).join('');
 }
 
 // ══════════════════════════════════════════════════════════════
@@ -514,7 +633,9 @@ function renderPromosList() {
   }
   el.innerHTML = promos.map(p => `
     <div class="promo-card">
-      <div class="promo-logo" style="background:${p.color}22;border:1px solid ${p.color}44;"><span>${p.emoji}</span></div>
+      <div class="promo-logo" style="background:${p.color}22;border:1px solid ${p.color}44;">
+        <span>${p.emoji}</span>
+      </div>
       <div style="flex:1">
         <div class="promo-super">${p.supermercado}</div>
         <div class="promo-desc">${p.desc} <span class="badge badge-purple">${p.banco_billetera}</span></div>
@@ -524,30 +645,31 @@ function renderPromosList() {
     </div>
   `).join('');
 
+  // Mejor día personal
   if (state.paymentMethods.length) {
-    let bd=null,bp=0,bpr=null;
-    for (let d=0;d<7;d++) {
+    let bd=null, bp=0, bpr=null;
+    for (let d=0; d<7; d++) {
       (PROMOTIONS[d]||[]).forEach(p => {
         if (state.paymentMethods.includes(p.banco_billetera)) {
-          const pct=parseInt(p.desc)||0;
-          if (pct>bp){bp=pct;bd=d;bpr=p;}
+          const pct = parseInt(p.desc) || 0;
+          if (pct > bp) { bp=pct; bd=d; bpr=p; }
         }
       });
     }
     if (bpr) {
-      document.getElementById('bestDayAlert').style.display='flex';
-      document.getElementById('bestDayTitle').textContent=`Tu mejor día: ${getDayName(bd)} en ${bpr.supermercado}`;
-      document.getElementById('bestDayBody').textContent=`Con ${bpr.banco_billetera} obtenés ${bpr.desc}. ${bpr.detail}.`;
+      document.getElementById('bestDayAlert').style.display = 'flex';
+      document.getElementById('bestDayTitle').textContent = `Tu mejor día: ${getDayName(bd)} en ${bpr.supermercado}`;
+      document.getElementById('bestDayBody').textContent = `Con ${bpr.banco_billetera} obtenés ${bpr.desc}. ${bpr.detail}.`;
     }
   }
 }
 
-window.selectDay = function(d) { selectedDay=d; renderPromos(); };
+window.selectDay = function(d) { selectedDay = d; renderPromos(); };
 
 function renderPaymentChips() {
   const el = document.getElementById('paymentChips');
   if (!state.paymentMethods.length) {
-    el.innerHTML = '<p style="font-size:13px;color:var(--muted);">Agregá tus métodos de pago para ver qué promociones te corresponden.</p>';
+    el.innerHTML = '<p style="font-size:13px;color:var(--muted);">Agregá tus métodos de pago para ver qué descuentos te corresponden.</p>';
     return;
   }
   el.innerHTML = state.paymentMethods.map(m => `
@@ -570,18 +692,22 @@ window.openPaymentModal = function() {
 
 window.togglePayment = function(method, btn) {
   if (state.paymentMethods.includes(method)) {
-    state.paymentMethods = state.paymentMethods.filter(m=>m!==method);
-    btn.className='btn btn-ghost btn-sm'; btn.textContent=method;
+    state.paymentMethods = state.paymentMethods.filter(m => m !== method);
+    btn.className = 'btn btn-ghost btn-sm';
+    btn.textContent = method;
   } else {
     state.paymentMethods.push(method);
-    btn.className='btn btn-primary btn-sm'; btn.textContent='✓ '+method;
+    btn.className = 'btn btn-primary btn-sm';
+    btn.textContent = '✓ ' + method;
   }
-  saveState(); renderPaymentChips();
+  saveState();
+  renderPaymentChips();
 };
 
 window.removePayment = function(method) {
-  state.paymentMethods = state.paymentMethods.filter(m=>m!==method);
-  saveState(); renderPaymentChips();
+  state.paymentMethods = state.paymentMethods.filter(m => m !== method);
+  saveState();
+  renderPaymentChips();
 };
 
 // ══════════════════════════════════════════════════════════════
@@ -593,12 +719,12 @@ function renderHistorial() {
     el.innerHTML = '<div class="empty-state" style="padding:50px 20px;"><div class="empty-icon">📊</div><div class="empty-title">Sin historial aún</div><div class="empty-sub">Hacé tu primera comparación.</div></div>';
     return;
   }
-  el.innerHTML = state.historial.map((h,i) => `
+  el.innerHTML = state.historial.map((h, i) => `
     <div class="hist-item">
       <div>
-        <div class="hist-date">🕐 ${h.date} · 📍 ${h.location}</div>
-        <div class="hist-summary">${h.items} productos comparados</div>
-        <div class="hist-detail">Más barato: <strong style="color:var(--green)">${h.best}</strong>${h.bestTotal>0?' · '+formatARS(h.bestTotal):''}</div>
+        <div class="hist-date">🕐 ${h.date}${h.location ? ' · 📍 ' + h.location : ''}</div>
+        <div class="hist-summary">${h.items} producto${h.items !== 1 ? 's' : ''} comparados</div>
+        ${h.totalMin > 0 ? `<div class="hist-detail">Total mínimo estimado: <strong style="color:var(--green)">${formatARS(h.totalMin)}</strong></div>` : ''}
       </div>
       <span class="badge badge-blue">#${i+1}</span>
     </div>
@@ -610,28 +736,56 @@ function renderHistorial() {
 // ══════════════════════════════════════════════════════════════
 window.openLocationModal = function() {
   document.getElementById('locationInput').value = state.location;
+  document.getElementById('geoStatus').textContent = '';
   document.getElementById('locationModal').classList.remove('hidden');
 };
 
 window.saveLocation = function() {
-  state.location = document.getElementById('locationInput').value.trim() || state.location;
-  document.getElementById('locationLabel').textContent = state.location;
+  const val = document.getElementById('locationInput').value.trim();
+  if (!val) { showToast('⚠️ Escribí una ciudad antes de guardar'); return; }
+  state.location = val;
+  document.getElementById('locationLabel').textContent = val;
   saveState();
   window.closeModal('locationModal');
-  showToast('📍 Ubicación actualizada');
+  showToast('📍 Ciudad guardada: ' + val);
 };
 
 window.useGeoLocation = function() {
-  if (!navigator.geolocation) { showToast('⚠️ Tu navegador no soporta geolocalización'); return; }
-  navigator.geolocation.getCurrentPosition(pos => {
-    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&format=json`)
-      .then(r=>r.json())
-      .then(d => {
-        const city = d.address?.city||d.address?.town||d.address?.village||'Tu ciudad';
-        const prov = d.address?.state||'';
-        document.getElementById('locationInput').value = `${city}, ${prov}`;
-      }).catch(()=>showToast('⚠️ No se pudo obtener la dirección'));
-  }, ()=>showToast('⚠️ No se pudo acceder a tu ubicación'));
+  if (!navigator.geolocation) {
+    document.getElementById('geoStatus').textContent = 'Tu navegador no soporta geolocalización.';
+    return;
+  }
+  document.getElementById('geoBtn').textContent = '⏳ Detectando...';
+  document.getElementById('geoStatus').textContent = '';
+
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      fetch(`https://nominatim.openstreetmap.org/reverse?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&format=json&accept-language=es`)
+        .then(r => r.json())
+        .then(d => {
+          const city = d.address?.city || d.address?.town || d.address?.village || '';
+          const state2 = d.address?.state || '';
+          const resultado = [city, state2].filter(Boolean).join(', ');
+          if (resultado) {
+            document.getElementById('locationInput').value = resultado;
+            document.getElementById('geoStatus').textContent = '✅ Ciudad detectada';
+          } else {
+            document.getElementById('geoStatus').textContent = '⚠️ No se pudo determinar la ciudad. Escribila manualmente.';
+          }
+        })
+        .catch(() => {
+          document.getElementById('geoStatus').textContent = '⚠️ Error al obtener la dirección. Escribí tu ciudad manualmente.';
+        })
+        .finally(() => {
+          document.getElementById('geoBtn').textContent = '📡 Detectar ciudad';
+        });
+    },
+    err => {
+      document.getElementById('geoBtn').textContent = '📡 Detectar ciudad';
+      document.getElementById('geoStatus').textContent = '⚠️ No se pudo acceder a tu ubicación. Escribí tu ciudad manualmente.';
+    },
+    { timeout: 8000 }
+  );
 };
 
 window.closeModal = function(id) {
@@ -639,30 +793,31 @@ window.closeModal = function(id) {
 };
 
 document.querySelectorAll('.modal-bg').forEach(bg => {
-  bg.addEventListener('click', e => { if(e.target===bg) bg.classList.add('hidden'); });
+  bg.addEventListener('click', e => { if (e.target === bg) bg.classList.add('hidden'); });
 });
 
 // ══════════════════════════════════════════════════════════════
 // INIT
 // ══════════════════════════════════════════════════════════════
 function init() {
-  document.getElementById('locationLabel').textContent = state.location;
+  document.getElementById('locationLabel').textContent = state.location || 'Mi ciudad';
   renderCanastaPreview();
   updateCanastaCount();
 
+  // Tip del día según métodos de pago
   if (state.paymentMethods.length) {
-    let bd=null,bp=0,bpr=null;
-    for (let d=0;d<7;d++) {
+    let bd=null, bp=0, bpr=null;
+    for (let d=0; d<7; d++) {
       (PROMOTIONS[d]||[]).forEach(p => {
         if (state.paymentMethods.includes(p.banco_billetera)) {
-          const pct=parseInt(p.desc)||0;
-          if (pct>bp){bp=pct;bd=d;bpr=p;}
+          const pct = parseInt(p.desc) || 0;
+          if (pct > bp) { bp=pct; bd=d; bpr=p; }
         }
       });
     }
     if (bpr) {
-      document.getElementById('dailyTipText').innerHTML =
-        `Con tu <strong style="color:var(--text)">${bpr.banco_billetera}</strong>, el mejor día es el <strong style="color:var(--accent)">${getDayName(bd)}</strong> en <strong style="color:var(--text)">${bpr.supermercado}</strong> → ${bpr.desc}.`;
+      const tipEl = document.getElementById('dailyTipText');
+      if (tipEl) tipEl.innerHTML = `Con tu <strong>${bpr.banco_billetera}</strong>, el mejor día para ir es el <strong style="color:var(--accent)">${getDayName(bd)}</strong> en <strong>${bpr.supermercado}</strong> → ${bpr.desc}. Agregá productos y presioná <strong>Comparar precios</strong>.`;
     }
   }
 }

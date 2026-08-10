@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SuperCompare</title>
+<title>SuperCompare — Comparador de Supermercados</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/app.css">
@@ -25,6 +25,7 @@
     <nav class="nav-tabs">
       <button class="nav-tab active" data-tab="comparar" onclick="switchTab('comparar')">⚖️ Comparar</button>
       <button class="nav-tab" data-tab="canasta" onclick="switchTab('canasta')">🧺 Mi Canasta</button>
+      <button class="nav-tab" data-tab="carrito" onclick="switchTab('carrito')">🛒 Mi Carrito</button>
       <button class="nav-tab" data-tab="promos" onclick="switchTab('promos')">🏷️ Promociones</button>
       <button class="nav-tab" data-tab="historial" onclick="switchTab('historial')">📊 Historial</button>
     </nav>
@@ -38,6 +39,9 @@
   <button class="mobile-tab" data-tab="canasta" onclick="switchTab('canasta')">
     <span class="tab-icon">🧺</span>Canasta
   </button>
+  <button class="mobile-tab" data-tab="carrito" onclick="switchTab('carrito')">
+    <span class="tab-icon">🛒</span>Carrito
+  </button>
   <button class="mobile-tab" data-tab="promos" onclick="switchTab('promos')">
     <span class="tab-icon">🏷️</span>Promos
   </button>
@@ -49,7 +53,7 @@
 <div class="loading-overlay hidden" id="loadingOverlay">
   <div style="font-size:36px">🛒</div>
   <div class="loading-title">Buscando los mejores precios...</div>
-  <div class="loading-sub" id="loadingSubtitle">Conectando con supermercados</div>
+  <div class="loading-sub">Consultando supermercados en tiempo real</div>
   <div class="loading-steps" id="loadingSteps">
     <div class="loading-step" id="step-carrefour"><span class="step-icon">🔵</span> Consultando Carrefour...</div>
     <div class="loading-step" id="step-jumbo"><span class="step-icon">🟢</span> Consultando Jumbo...</div>
@@ -63,15 +67,19 @@
 
 <div class="modal-bg hidden" id="locationModal">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title">📍 Cambiar ubicación</div></div>
+    <div class="modal-header"><div class="modal-title">📍 Tu ciudad</div></div>
     <div class="modal-body">
       <div>
         <div class="form-label">Ciudad o localidad</div>
-        <input class="input" id="locationInput" placeholder="Ej: Bahía Blanca...">
+        <input class="input" id="locationInput" placeholder="Ej: Bahía Blanca, Buenos Aires...">
+        <p style="font-size:11px;color:var(--muted);margin-top:8px;">
+          ℹ️ La ubicación se usa como referencia informativa en el historial y el análisis de IA. Los precios que se muestran son del sitio web de cada supermercado (precios online).
+        </p>
       </div>
       <div>
-        <div class="form-label">O usá tu ubicación actual</div>
-        <button class="btn btn-ghost" onclick="useGeoLocation()">📡 Detectar automáticamente</button>
+        <div class="form-label">O detectá tu ciudad automáticamente</div>
+        <button class="btn btn-ghost" onclick="useGeoLocation()" id="geoBtn">📡 Detectar ciudad</button>
+        <span id="geoStatus" style="font-size:11px;color:var(--muted);margin-left:8px;"></span>
       </div>
     </div>
     <div class="modal-footer">
@@ -83,12 +91,15 @@
 
 <main class="container">
 
+  <!-- ═══ COMPARAR ═══ -->
   <div class="page active" id="page-comparar">
     <div class="alert alert-blue mb-20">
       <div class="alert-icon">💡</div>
       <div>
-        <div class="alert-title" style="color:#60A5FA">Sugerencia del día</div>
-        <div class="alert-body" id="dailyTipText">Escribí cualquier producto en el buscador y presioná <strong>Comparar precios</strong>.</div>
+        <div class="alert-title" style="color:#60A5FA">¿Cómo funciona?</div>
+        <div class="alert-body" id="dailyTipText">
+          Escribí cualquier producto, agregalo a tu canasta y presioná <strong>Comparar precios</strong>. Después podés elegir en qué super comprás cada cosa y armar tu carrito optimizado.
+        </div>
       </div>
     </div>
 
@@ -104,7 +115,7 @@
         <div class="search-wrap">
           <span class="search-icon">🔍</span>
           <input class="input" id="quickSearch"
-            placeholder="Ej: leche, arroz, detergente..."
+            placeholder="Ej: casancrem, leche entera, detergente..."
             autocomplete="off"
             oninput="handleSearch(this.value)"
             onblur="setTimeout(hideSuggestions, 200)">
@@ -115,7 +126,7 @@
         <div class="empty-state" style="padding:40px 20px;">
           <div class="empty-icon">🧺</div>
           <div class="empty-title">Canasta vacía</div>
-          <div class="empty-sub">Escribí cualquier producto arriba para agregar.</div>
+          <div class="empty-sub">Escribí cualquier producto arriba para agregar. Podés escribir marca, tipo de producto, o ambos.</div>
         </div>
       </div>
       <div style="padding:14px 20px; border-top:1px solid var(--border); display:flex; gap:10px; justify-content:flex-end;">
@@ -134,43 +145,32 @@
           </div>
         </div>
         <div id="aiContent">
-          <div class="ai-thinking"><div class="spinner"></div>Analizando precios...</div>
+          <div class="ai-thinking"><div class="spinner"></div>Analizando...</div>
         </div>
       </div>
-      <div class="section-title">Total de tu canasta por supermercado</div>
-      <div class="compare-top" id="totalRanking"></div>
-      <div class="section-title mt-20">Precio por producto</div>
-      <div class="compare-table-wrap">
-        <table class="compare-table">
-          <thead>
-            <tr>
-              <th class="product-col">Producto</th>
-              <th class="super-col"><div style="width:22px;height:22px;border-radius:5px;background:#003B8E;color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 3px;">C</div>Carrefour</th>
-              <th class="super-col"><div style="width:22px;height:22px;border-radius:5px;background:#00873D;color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 3px;">J</div>Jumbo</th>
-              <th class="super-col"><div style="width:22px;height:22px;border-radius:5px;background:#FF6B00;color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 3px;">CH</div>Chango +</th>
-              <th class="super-col"><div style="width:22px;height:22px;border-radius:5px;background:#C8102E;color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 3px;">A</div>La Anónima</th>
-              <th class="super-col"><div style="width:22px;height:22px;border-radius:5px;background:#6B21A8;color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 3px;">M</div>Maxi Consumo</th>
-              <th class="super-col"><div style="width:22px;height:22px;border-radius:5px;background:#0D9488;color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 3px;">CO</div>La Coope</th>
-            </tr>
-          </thead>
-          <tbody id="compareTableBody"></tbody>
-        </table>
+
+      <div class="flex justify-between items-center mb-12">
+        <div class="section-title" style="margin-bottom:0">Resultados por producto</div>
+        <button class="btn btn-primary btn-sm" onclick="switchTab('carrito')">🛒 Ver mi carrito</button>
       </div>
+
+      <div id="productResults"></div>
     </div>
   </div>
 
+  <!-- ═══ CANASTA ═══ -->
   <div class="page" id="page-canasta">
     <div class="flex justify-between items-center mb-16">
       <div>
         <h1 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;">Mi Canasta Habitual</h1>
-        <p style="font-size:12px;color:var(--muted);margin-top:4px;">Los productos se guardan automáticamente.</p>
+        <p style="font-size:12px;color:var(--muted);margin-top:4px;">Se guarda automáticamente en tu dispositivo.</p>
       </div>
       <button class="btn btn-primary" onclick="switchTab('comparar'); setTimeout(runComparison,300)">⚖️ Comparar</button>
     </div>
     <div class="search-wrap mb-16">
       <span class="search-icon">🔍</span>
       <input class="input" id="canastaSearch"
-        placeholder="Agregar producto a mi canasta..."
+        placeholder="Escribí cualquier producto para agregar..."
         autocomplete="off"
         oninput="handleSearchCanasta(this.value)"
         onblur="setTimeout(hideSuggestionsCanasta, 200)">
@@ -191,6 +191,26 @@
     </div>
   </div>
 
+  <!-- ═══ CARRITO ═══ -->
+  <div class="page" id="page-carrito">
+    <div class="flex justify-between items-center mb-16">
+      <div>
+        <h1 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;">Mi Carrito Optimizado</h1>
+        <p style="font-size:12px;color:var(--muted);margin-top:4px;">Elegís vos en qué super comprás cada cosa.</p>
+      </div>
+      <button class="btn btn-ghost btn-sm" onclick="clearCarrito()">🗑️ Limpiar</button>
+    </div>
+    <div id="carritoContent">
+      <div class="empty-state" style="padding:60px 20px;">
+        <div class="empty-icon">🛒</div>
+        <div class="empty-title">Tu carrito está vacío</div>
+        <div class="empty-sub">Comparé precios primero y después elegí en qué super comprás cada producto.</div>
+        <button class="btn btn-primary" style="margin-top:16px;" onclick="switchTab('comparar')">⚖️ Ir a comparar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PROMOS ═══ -->
   <div class="page" id="page-promos">
     <div class="flex justify-between items-center mb-16">
       <div>
@@ -220,6 +240,7 @@
     </div>
   </div>
 
+  <!-- ═══ HISTORIAL ═══ -->
   <div class="page" id="page-historial">
     <div class="flex justify-between items-center mb-16">
       <div>
@@ -242,10 +263,10 @@
 
 <div class="modal-bg hidden" id="paymentModal">
   <div class="modal">
-    <div class="modal-header"><div class="modal-title">💳 Agregar método de pago</div></div>
+    <div class="modal-header"><div class="modal-title">💳 Mis métodos de pago</div></div>
     <div class="modal-body">
       <div>
-        <div class="form-label">Seleccioná tu banco o billetera</div>
+        <div class="form-label">Seleccioná tus bancos o billeteras</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;" id="paymentOptions"></div>
       </div>
     </div>
